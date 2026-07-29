@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GitHub Platform — A Visual Learning Guide · Enterprise · Advanced Security · Copilot</title>
 <meta name="description" content="An interactive learning guide that builds an intuitive mental model of GitHub Enterprise, GitHub Advanced Security, and GitHub Copilot Business — how each product works and how they fit together across the software development lifecycle.">
+<script>
+  // Set theme + js flag before first paint (avoids flash of wrong theme)
+  (function(){
+    try {
+      var t = localStorage.getItem('gpg-theme');
+      if (!t) t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+    } catch(e){ document.documentElement.setAttribute('data-theme','dark'); }
+    document.documentElement.classList.add('js');
+  })();
+</script>
 <style>
   :root {
     --bg: #0d1117;
@@ -251,10 +262,143 @@
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
   .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce){ .reveal { opacity: 1; transform: none; transition: none; } html { scroll-behavior: auto; } }
+
+  /* ============================================================
+     ENHANCEMENTS: light theme · nav actions · mobile menu ·
+     back-to-top · skip link · doc links · heading anchors ·
+     accordions · compare toggle · diagram assemble · print
+     ============================================================ */
+
+  /* ---------- LIGHT THEME ---------- */
+  :root[data-theme="light"]{
+    --bg: #ffffff;
+    --bg-alt: #f6f8fa;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f6f8fa;
+    --bg-inset: #f6f8fa;
+    --border: #d0d7de;
+    --border-soft: #e6eaef;
+    --text: #1f2328;
+    --text-muted: #57606a;
+    --text-dim: #6e7781;
+    --blue: #0969da;
+    --green: #1a7f37;
+    --purple: #8250df;
+    --orange: #9a6700;
+    --red: #cf222e;
+    --ent: #0969da; --sec: #1a7f37; --cop: #8250df;
+    --shadow: 0 8px 30px rgba(140,149,159,0.22);
+  }
+  :root[data-theme="light"] .p-ent .section-label{ color: var(--ent); }
+  :root[data-theme="light"] .p-sec .section-label{ color: var(--sec); }
+  :root[data-theme="light"] .p-cop .section-label{ color: var(--cop); }
+  [data-theme="light"] nav{ background: rgba(255,255,255,0.85); }
+  [data-theme="light"] .hero-badge{ background: rgba(255,255,255,0.72); }
+  [data-theme="light"] .hero::after{ background-image: linear-gradient(rgba(208,215,222,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(208,215,222,0.6) 1px, transparent 1px); }
+  [data-theme="light"] ::selection{ background: rgba(9,105,218,0.18); }
+  /* keep SVG diagrams as dark "figures" for legibility in either theme */
+  [data-theme="light"] .diagram{ background: #0d1117; border-color: #30363d; }
+  [data-theme="light"] .diagram .dg-title{ color: #e6edf3; }
+  [data-theme="light"] .diagram .dg-sub,
+  [data-theme="light"] .diagram .dg-cap{ color: #8b949e; }
+  [data-theme="light"] .diagram .dg-title .em{ color: #bc8cff; }
+
+  /* ---------- NAV ACTIONS · THEME + HAMBURGER ---------- */
+  nav .nav-actions{ display: flex; align-items: center; gap: 0.5rem; }
+  .icon-btn{ display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; height: 36px; min-width: 36px; padding: 0 0.6rem; border-radius: 9px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); cursor: pointer; font-size: 0.95rem; font-weight: 600; transition: border-color 0.18s, background 0.18s, transform 0.12s; }
+  .icon-btn:hover{ border-color: var(--blue); transform: translateY(-1px); }
+  .icon-btn:active{ transform: translateY(0); }
+  .icon-btn .lbl{ font-size: 0.82rem; }
+  #hamburger{ display: none; }
+  @media (max-width: 900px){ #hamburger{ display: inline-flex; } #printBtn .lbl{ display: none; } }
+
+  /* ---------- MOBILE MENU ---------- */
+  .mobile-menu{ position: fixed; top: 60px; left: 0; right: 0; z-index: 199; background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: var(--shadow); transform: translateY(-12px); opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; max-height: calc(100vh - 60px); overflow: auto; }
+  .mobile-menu.open{ opacity: 1; transform: none; pointer-events: auto; }
+  .mobile-menu ul{ list-style: none; padding: 0.6rem 1rem 1rem; display: grid; gap: 0.1rem; }
+  .mobile-menu a{ display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0.6rem; border-radius: 8px; color: var(--text); text-decoration: none; font-weight: 600; font-size: 0.95rem; border-bottom: 1px solid var(--border-soft); }
+  .mobile-menu li:last-child a{ border-bottom: none; }
+  .mobile-menu a .mm-num{ font-family: ui-monospace, monospace; font-size: 0.72rem; color: var(--text-dim); }
+  .mobile-menu a:hover, .mobile-menu a.active{ background: var(--bg-alt); color: var(--blue); }
+  @media (min-width: 901px){ .mobile-menu{ display: none; } }
+
+  /* ---------- FRESHNESS STAMP ---------- */
+  .hero-meta{ margin-top: 1.6rem; font-size: 0.78rem; color: var(--text-dim); display: inline-flex; gap: 0.55rem; align-items: center; flex-wrap: wrap; justify-content: center; }
+  .hero-meta .sep{ opacity: 0.45; }
+  .hero-meta b{ color: var(--text-muted); font-weight: 700; }
+
+  /* ---------- BACK TO TOP ---------- */
+  #toTop{ position: fixed; right: 1.2rem; bottom: 1.2rem; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); font-size: 1.15rem; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity 0.25s, transform 0.25s, border-color 0.18s; z-index: 190; box-shadow: var(--shadow); }
+  #toTop.show{ opacity: 1; pointer-events: auto; transform: none; }
+  #toTop:hover{ border-color: var(--blue); transform: translateY(-2px); }
+
+  /* ---------- SKIP LINK ---------- */
+  .skip-link{ position: absolute; left: -999px; top: 0; z-index: 300; background: var(--blue); color: #04101f; padding: 0.6rem 1rem; border-radius: 0 0 8px 0; font-weight: 700; font-size: 0.85rem; text-decoration: none; }
+  .skip-link:focus{ left: 0; }
+
+  /* ---------- DOC "LEARN MORE" LINKS ---------- */
+  .doc-link{ display: inline-flex; align-items: center; gap: 0.32rem; margin-top: 0.9rem; font-size: 0.8rem; font-weight: 650; color: var(--accent, var(--blue)); text-decoration: none; }
+  .doc-link:hover{ text-decoration: underline; }
+  .doc-link .arw{ transition: transform 0.15s; }
+  .doc-link:hover .arw{ transform: translateX(2px); }
+  .card .doc-link{ margin-top: 1rem; }
+  .fcard .fc-foot{ padding: 0 1.4rem 1.3rem; margin-top: auto; }
+
+  /* ---------- HEADING ANCHORS ---------- */
+  .section-title .anchor{ opacity: 0; margin-left: 0.55rem; font-size: 0.62em; color: var(--text-dim); text-decoration: none; cursor: pointer; transition: opacity 0.15s, color 0.15s; vertical-align: middle; user-select: none; }
+  .section-title:hover .anchor, .section-title .anchor:focus{ opacity: 0.75; }
+  .section-title .anchor:hover{ opacity: 1; color: var(--blue); }
+  .section-title .anchor.copied{ opacity: 1; color: var(--green); }
+
+  /* ---------- ACCORDION (collapsible feature cards) ---------- */
+  .acc-controls{ display: flex; gap: 0.5rem; justify-content: flex-end; margin: 0 0 0.9rem; }
+  .acc-controls button{ font-size: 0.74rem; font-weight: 650; color: var(--text-muted); background: none; border: 1px solid var(--border); border-radius: 7px; padding: 0.32rem 0.7rem; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+  .acc-controls button:hover{ border-color: var(--blue); color: var(--text); }
+  .js .fcard[data-collapsible] .fc-head{ cursor: pointer; position: relative; padding-right: 2.6rem; user-select: none; }
+  .fcard[data-collapsible] .fc-head::after{ content: '▾'; position: absolute; right: 1.3rem; top: 1.25rem; color: var(--text-dim); font-size: 0.9rem; transition: transform 0.2s; }
+  .fcard[data-collapsible].collapsed .fc-head::after{ transform: rotate(-90deg); }
+  .fcard[data-collapsible] .fc-head:hover::after{ color: var(--accent, var(--blue)); }
+  .fcard.collapsed .fc-body, .fcard.collapsed .fc-foot{ display: none; }
+  .fcard[data-collapsible] .fc-head:focus-visible{ outline: 2px solid var(--blue); outline-offset: -2px; border-radius: 8px; }
+
+  /* ---------- COMPARE TOGGLE (segmented control) ---------- */
+  .cmp-tools{ display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin: 0.6rem 0 0.25rem; }
+  .cmp-tools .cmp-hint{ font-size: 0.76rem; color: var(--text-dim); }
+  .seg{ display: inline-flex; gap: 0.25rem; padding: 0.25rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; flex-wrap: wrap; }
+  .seg button{ font-size: 0.79rem; font-weight: 650; color: var(--text-muted); background: none; border: none; border-radius: 7px; padding: 0.4rem 0.85rem; cursor: pointer; transition: background 0.15s, color 0.15s; }
+  .seg button:hover{ color: var(--text); }
+  .seg button[aria-pressed="true"]{ background: var(--grad-github); color: #04101f; }
+  .cmp-dim{ opacity: 0.3; transition: opacity 0.25s; }
+
+  /* ---------- DIAGRAM ASSEMBLE ANIMATION ---------- */
+  .js .dg-assemble .lyr{ opacity: 0; transition: opacity 0.7s ease, transform 0.7s ease; transform-box: fill-box; transform-origin: center; }
+  .js .dg-assemble .lyr-shell{ transform: scale(1.05); }
+  .js .dg-assemble .lyr-ring{ transform: scale(1.09); transition-delay: 0.16s; }
+  .js .dg-assemble .lyr-core{ transform: scale(1.14); transition-delay: 0.34s; }
+  .js .dg-assemble.assembled .lyr{ opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce){ .js .dg-assemble .lyr{ opacity: 1 !important; transform: none !important; transition: none; } }
+
+  /* ---------- PRINT / PDF ---------- */
+  @media print{
+    nav, .mobile-menu, #toTop, #progress, .hero-cta, .acc-controls, .cmp-tools, .skip-link, .section-title .anchor{ display: none !important; }
+    html, body{ background: #fff !important; color: #000 !important; }
+    .hero{ min-height: auto; padding: 1.5rem 1rem 1rem; }
+    .hero::before, .hero::after{ display: none !important; }
+    .hero h1 .grad{ -webkit-text-fill-color: #111; color: #111; }
+    .band{ background: #fff !important; border-color: #ddd; }
+    .reveal{ opacity: 1 !important; transform: none !important; }
+    .fcard.collapsed .fc-body, .fcard.collapsed .fc-foot{ display: grid !important; }
+    .fcard[data-collapsible] .fc-head::after{ display: none !important; }
+    section, .card, .fcard, .analogy, .tk, .callout, .gterm, .diagram, .jstep, .pillar{ break-inside: avoid; page-break-inside: avoid; }
+    .card, .fcard, .callout, .gterm, .analogy, .pillar{ border-color: #ccc !important; box-shadow: none !important; }
+    .diagram{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    a[href^="http"]::after{ content: ''; }
+  }
 </style>
 </head>
 <body>
 
+<a href="#overview" class="skip-link">Skip to content</a>
 <div id="progress"></div>
 <nav>
   <div class="nav-inner">
@@ -271,8 +415,27 @@
       <li><a href="#tables">Tables</a></li>
       <li><a href="#takeaways">Takeaways</a></li>
     </ul>
+    <div class="nav-actions">
+      <button id="printBtn" class="icon-btn" type="button" title="Print or save as PDF" aria-label="Print or save as PDF"><span aria-hidden="true">🖨️</span><span class="lbl">PDF</span></button>
+      <button id="themeBtn" class="icon-btn" type="button" title="Toggle light / dark theme" aria-label="Toggle light or dark theme"><span class="tico" aria-hidden="true">🌙</span></button>
+      <button id="hamburger" class="icon-btn" type="button" title="Menu" aria-label="Open section menu" aria-expanded="false" aria-controls="mobileMenu"><span aria-hidden="true">☰</span></button>
+    </div>
   </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#overview"><span>Overview</span><span class="mm-num">01</span></a></li>
+    <li><a href="#enterprise"><span>GitHub Enterprise</span><span class="mm-num">02</span></a></li>
+    <li><a href="#security"><span>Advanced Security</span><span class="mm-num">03</span></a></li>
+    <li><a href="#copilot"><span>Copilot Business</span><span class="mm-num">04</span></a></li>
+    <li><a href="#sdlc"><span>Lifecycle</span><span class="mm-num">05</span></a></li>
+    <li><a href="#journey"><span>Developer Journey</span><span class="mm-num">06</span></a></li>
+    <li><a href="#map"><span>Relationship Map</span><span class="mm-num">07</span></a></li>
+    <li><a href="#models"><span>Mental Models</span><span class="mm-num">08</span></a></li>
+    <li><a href="#tables"><span>Summary Tables</span><span class="mm-num">09</span></a></li>
+    <li><a href="#takeaways"><span>Key Takeaways</span><span class="mm-num">10</span></a></li>
+  </ul>
+</div>
 
 <!-- ============ HERO ============ -->
 <header class="hero">
@@ -288,6 +451,13 @@
       <div class="pf"><b style="color:var(--ent)">🏢 Enterprise</b><span>The platform &amp; governance</span></div>
       <div class="pf"><b style="color:var(--sec)">🛡️ Advanced Security</b><span>Protection across the SDLC</span></div>
       <div class="pf"><b style="color:var(--cop)">🤖 Copilot Business</b><span>AI across the workflow</span></div>
+    </div>
+    <div class="hero-meta">
+      <span><b>Updated</b> 29 Jul 2026</span>
+      <span class="sep">·</span>
+      <span id="readTime"><b>~18 min</b> read</span>
+      <span class="sep">·</span>
+      <span>10 sections · read it more than once</span>
     </div>
   </div>
 </header>
@@ -325,7 +495,7 @@
   </div>
 
   <!-- Diagram A: concentric product layers -->
-  <div class="diagram" role="img" aria-label="Concentric layer diagram: GitHub Enterprise is the core foundation at the center, GitHub Copilot forms the acceleration layer wrapped around the core, and GitHub Advanced Security forms the outer protective shell wrapped around everything.">
+  <div class="diagram dg-assemble" role="img" aria-label="Concentric layer diagram: GitHub Enterprise is the core foundation at the center, GitHub Copilot forms the acceleration layer wrapped around the core, and GitHub Advanced Security forms the outer protective shell wrapped around everything.">
     <div class="dg-title">Three products, structured as <span class="em">concentric layers</span></div>
     <div class="dg-sub">Enterprise sits at the core · Copilot wraps it to accelerate · Advanced Security forms the outer protective shell</div>
     <svg viewBox="0 0 860 452" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, Segoe UI, sans-serif">
@@ -336,22 +506,27 @@
       </defs>
 
       <!-- Outer shell: Advanced Security -->
+      <g class="lyr lyr-shell">
       <rect x="28" y="58" width="804" height="352" rx="30" fill="#3fb950" fill-opacity="0.06" stroke="url(#ovSec)" stroke-width="2.5"/>
       <rect x="44" y="44" width="344" height="30" rx="8" fill="#0d1117" stroke="#2ea043" stroke-width="1"/>
       <text x="60" y="63.5" fill="#56d364" font-size="12" font-weight="800" letter-spacing="0.3">🛡️ ADVANCED SECURITY · outer protective shell</text>
       <g stroke="#56d364" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M44,228 l11,9 l-11,9"/><path d="M816,228 l-11,9 l11,9"/>
       </g>
+      </g>
 
       <!-- Middle ring: Copilot -->
+      <g class="lyr lyr-ring">
       <rect x="92" y="120" width="676" height="236" rx="24" fill="#bc8cff" fill-opacity="0.07" stroke="url(#ovCop)" stroke-width="2.5"/>
       <rect x="108" y="106" width="300" height="30" rx="8" fill="#0d1117" stroke="#8957e5" stroke-width="1"/>
       <text x="124" y="125.5" fill="#d2a8ff" font-size="12" font-weight="800" letter-spacing="0.3">🤖 GITHUB COPILOT · acceleration layer</text>
       <g stroke="#d2a8ff" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round" stroke-linejoin="round">
         <path d="M108,229 l10,8 l-10,8"/><path d="M752,229 l-10,8 l10,8"/>
       </g>
+      </g>
 
       <!-- Core: Enterprise -->
+      <g class="lyr lyr-core">
       <rect x="170" y="184" width="520" height="152" rx="16" fill="url(#ovEnt)" opacity="0.15"/>
       <rect x="170" y="184" width="520" height="152" rx="16" fill="none" stroke="#58a6ff" stroke-width="1.6"/>
       <text x="430" y="209" fill="#58a6ff" font-size="12.5" font-weight="800" text-anchor="middle" letter-spacing="0.4">🏢 GITHUB ENTERPRISE · the core foundation</text>
@@ -370,6 +545,7 @@
       </g>
 
       <text x="430" y="392" fill="#8b949e" font-size="12" text-anchor="middle">The <tspan fill="#58a6ff">core</tspan> is wrapped by <tspan fill="#d2a8ff">acceleration</tspan>, which is wrapped by <tspan fill="#56d364">protection</tspan> — one system, three layers.</text>
+      </g>
     </svg>
     <div class="dg-cap">Read it from the inside out: the Enterprise core holds your work, Copilot's layer speeds up the people working on it, and Advanced Security's shell guards every layer within.</div>
   </div>
@@ -1029,8 +1205,17 @@
   </div>
 
   <h3 style="font-size:1.1rem;font-weight:730;margin:0.5rem 0 0.25rem">Product comparison</h3>
+  <div class="cmp-tools">
+    <div class="seg" id="cmpSeg" role="group" aria-label="Focus one product in the comparison">
+      <button type="button" data-cmp="all" aria-pressed="true">All three</button>
+      <button type="button" data-cmp="1" aria-pressed="false">🏢 Enterprise</button>
+      <button type="button" data-cmp="2" aria-pressed="false">🛡️ Adv. Security</button>
+      <button type="button" data-cmp="3" aria-pressed="false">🤖 Copilot</button>
+    </div>
+    <span class="cmp-hint">Tap a product to focus its column</span>
+  </div>
   <div class="table-wrap">
-    <table>
+    <table id="cmpTable">
       <thead><tr><th>&nbsp;</th><th><span class="dotc" style="background:var(--ent)"></span>GitHub Enterprise</th><th><span class="dotc" style="background:var(--sec)"></span>Advanced Security</th><th><span class="dotc" style="background:var(--cop)"></span>Copilot Business</th></tr></thead>
       <tbody>
         <tr><td><strong>Role</strong></td><td>The platform &amp; foundation</td><td>The protection layer</td><td>The acceleration layer</td></tr>
@@ -1232,6 +1417,8 @@
   <div class="callout key mt-lg"><div class="co-ic">🧭</div><div><h4>Your reusable reasoning trick</h4><p>Meet a new GitHub feature? Ask three questions: <strong>Which layer is it?</strong> (platform / security / AI) · <strong>Which lifecycle phase?</strong> · <strong>What does it produce or consume?</strong> Place it on this map and it'll make sense instantly — you'll be extending the model, not memorizing another isolated feature.</p></div></div>
 </section>
 
+<button id="toTop" type="button" title="Back to top" aria-label="Back to top">↑</button>
+
 <footer>
   <div class="f-logo"><span class="grad">⬡ GitHub Platform — Visual Learning Guide</span></div>
   <p>A self-contained reference for building an intuitive model of GitHub Enterprise, Advanced Security &amp; Copilot Business.</p>
@@ -1262,6 +1449,230 @@
     entries.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+
+  // ---------- theme toggle ----------
+  (function(){
+    var btn = document.getElementById('themeBtn');
+    if (!btn) return;
+    function paint(){
+      var t = document.documentElement.getAttribute('data-theme');
+      var ico = btn.querySelector('.tico');
+      if (ico) ico.textContent = (t === 'light') ? '☀️' : '🌙';
+      btn.setAttribute('title', 'Switch to ' + (t === 'light' ? 'dark' : 'light') + ' theme');
+    }
+    paint();
+    btn.addEventListener('click', function(){
+      var cur = document.documentElement.getAttribute('data-theme');
+      var next = (cur === 'light') ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('gpg-theme', next); } catch(e){}
+      paint();
+    });
+  })();
+
+  // ---------- print / PDF ----------
+  (function(){
+    var p = document.getElementById('printBtn');
+    if (p) p.addEventListener('click', function(){ window.print(); });
+  })();
+
+  // ---------- mobile menu ----------
+  (function(){
+    var ham = document.getElementById('hamburger');
+    var menu = document.getElementById('mobileMenu');
+    if (!ham || !menu) return;
+    function setOpen(open){
+      menu.classList.toggle('open', open);
+      ham.setAttribute('aria-expanded', open ? 'true' : 'false');
+      ham.querySelector('span').textContent = open ? '✕' : '☰';
+    }
+    ham.addEventListener('click', function(e){ e.stopPropagation(); setOpen(!menu.classList.contains('open')); });
+    menu.addEventListener('click', function(e){ if (e.target.closest('a')) setOpen(false); });
+    document.addEventListener('click', function(e){ if (menu.classList.contains('open') && !menu.contains(e.target) && e.target !== ham) setOpen(false); });
+    document.addEventListener('keydown', function(e){ if (e.key === 'Escape') setOpen(false); });
+    window.addEventListener('resize', function(){ if (window.innerWidth > 900) setOpen(false); });
+    // mirror active-section highlight into the mobile menu
+    var mLinks = Array.prototype.slice.call(menu.querySelectorAll('a'));
+    document.addEventListener('scroll', function(){
+      var idx = -1;
+      for (var i = 0; i < sections.length; i++){ if (sections[i] && sections[i].getBoundingClientRect().top <= 120) idx = i; }
+      mLinks.forEach(function(l, i){ l.classList.toggle('active', i === idx); });
+    }, { passive: true });
+  })();
+
+  // ---------- back to top ----------
+  (function(){
+    var t = document.getElementById('toTop');
+    if (!t) return;
+    function upd(){ t.classList.toggle('show', (window.scrollY || 0) > 600); }
+    document.addEventListener('scroll', upd, { passive: true });
+    t.addEventListener('click', function(){ window.scrollTo({ top: 0, behavior: 'smooth' }); });
+    upd();
+  })();
+
+  // ---------- reading time ----------
+  (function(){
+    var el = document.getElementById('readTime');
+    if (!el) return;
+    var words = (document.body.innerText || '').trim().split(/\s+/).length;
+    var mins = Math.max(1, Math.round(words / 200));
+    el.innerHTML = '<b>~' + mins + ' min</b> read';
+  })();
+
+  // ---------- copyable heading anchors ----------
+  (function(){
+    document.querySelectorAll('section[id] > .section-head > .section-title, section[id] .band-inner > .section-head > .section-title').forEach(function(h){
+      var sec = h.closest('section[id]');
+      if (!sec) return;
+      var a = document.createElement('a');
+      a.className = 'anchor';
+      a.href = '#' + sec.id;
+      a.textContent = '🔗';
+      a.setAttribute('aria-label', 'Copy link to this section');
+      a.addEventListener('click', function(e){
+        e.preventDefault();
+        var url = location.origin + location.pathname + '#' + sec.id;
+        history.replaceState(null, '', '#' + sec.id);
+        var done = function(){ a.classList.add('copied'); setTimeout(function(){ a.classList.remove('copied'); }, 1200); };
+        if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(url).then(done, done); } else { done(); }
+      });
+      h.appendChild(a);
+    });
+  })();
+
+  // ---------- "Learn more" doc links ----------
+  (function(){
+    var D = 'https://docs.github.com/en/';
+    var map = {
+      // Enterprise
+      'Repository management': D + 'repositories',
+      'Organizations & teams': D + 'organizations',
+      'Permissions & access control': D + 'organizations/managing-user-access-to-your-organizations-repositories',
+      'Enterprise Managed Users (EMU)': D + 'enterprise-cloud@latest/admin/managing-iam/understanding-iam-for-enterprises/about-enterprise-managed-users',
+      'Cloud vs Server': D + 'enterprise-cloud@latest/admin/overview/about-github-for-enterprises',
+      'Policies & governance': D + 'enterprise-cloud@latest/admin/enforcing-policies',
+      'Audit logs': D + 'enterprise-cloud@latest/admin/monitoring-activity-in-your-enterprise/reviewing-audit-logs-for-your-enterprise/about-the-audit-log-for-your-enterprise',
+      'Actions (CI/CD)': D + 'actions',
+      'Codespaces': D + 'codespaces',
+      'Packages': D + 'packages',
+      'Projects': D + 'issues/planning-and-tracking-with-projects',
+      'Integrations': D + 'apps',
+      // Advanced Security
+      'Code Scanning': D + 'code-security/code-scanning',
+      'Secret Scanning': D + 'code-security/secret-scanning',
+      'Dependency Review': D + 'code-security/supply-chain-security/understanding-your-software-supply-chain/about-dependency-review',
+      'Dependabot': D + 'code-security/dependabot',
+      'Security Overview': D + 'code-security/security-overview',
+      'Security Campaigns': D + 'code-security/securing-your-organization/fixing-security-alerts-at-scale/about-security-campaigns',
+      'Supply Chain Security': D + 'code-security/supply-chain-security',
+      'CodeQL': D + 'code-security/codeql-cli',
+      'Vulnerability Management': D + 'code-security/security-overview/about-security-overview',
+      // Copilot
+      'Code Completion': D + 'copilot/using-github-copilot/getting-code-suggestions-in-your-ide-with-github-copilot',
+      'Chat': D + 'copilot/using-github-copilot/copilot-chat',
+      'Agent Mode': D + 'copilot/concepts/agents',
+      'AI Context': D + 'copilot/how-tos/provide-context',
+      'Code Explanation': D + 'copilot/how-tos/chat-with-copilot/chat-in-ide',
+      'Pull Request Assistance': D + 'copilot/using-github-copilot/code-review/using-copilot-code-review',
+      'Documentation Generation': D + 'copilot/tutorials/copilot-chat-cookbook/documenting-code',
+      'Test Generation': D + 'copilot/tutorials/copilot-chat-cookbook/testing-code/generate-unit-tests',
+      'Workspace Context': D + 'copilot/how-tos/provide-context',
+      'Extensions': D + 'copilot/building-copilot-extensions/about-building-copilot-extensions',
+      'Models': D + 'copilot/using-github-copilot/ai-models',
+      'Prompt Files': D + 'copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot'
+    };
+    function linkFor(title){ return map[title]; }
+    // .card (Enterprise)
+    document.querySelectorAll('#enterprise .card > h3').forEach(function(h){
+      var url = linkFor(h.textContent.replace(/\s+/g,' ').trim()); if (!url) return;
+      h.parentNode.appendChild(makeLink(url));
+    });
+    // .fcard (Security + Copilot)
+    document.querySelectorAll('.fcard > .fc-head > h3').forEach(function(h){
+      var url = linkFor(h.textContent.replace(/\s+/g,' ').trim()); if (!url) return;
+      var card = h.closest('.fcard');
+      var foot = document.createElement('div'); foot.className = 'fc-foot';
+      foot.appendChild(makeLink(url)); card.appendChild(foot);
+    });
+    function makeLink(url){
+      var a = document.createElement('a');
+      a.className = 'doc-link'; a.href = url; a.target = '_blank'; a.rel = 'noopener';
+      a.innerHTML = 'Learn more <span class="arw" aria-hidden="true">→</span>';
+      return a;
+    }
+  })();
+
+  // ---------- collapsible feature cards (accordions) ----------
+  (function(){
+    var grids = {};
+    document.querySelectorAll('#security .fcard, #copilot .fcard').forEach(function(card){
+      card.setAttribute('data-collapsible', '');
+      var head = card.querySelector('.fc-head');
+      var body = card.querySelector('.fc-body');
+      if (!head || !body) return;
+      var bodyId = body.id || ('fc-' + Math.random().toString(36).slice(2, 8));
+      body.id = bodyId;
+      head.setAttribute('role', 'button');
+      head.setAttribute('tabindex', '0');
+      head.setAttribute('aria-expanded', 'true');
+      head.setAttribute('aria-controls', bodyId);
+      function toggle(){
+        var collapsed = card.classList.toggle('collapsed');
+        head.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      }
+      head.addEventListener('click', toggle);
+      head.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); } });
+      var grid = card.parentNode;
+      grids[grid.dataset._gid || (grid.dataset._gid = Math.random().toString(36).slice(2,7))] = grid;
+    });
+    // inject Expand/Collapse-all controls above each fcard grid
+    Object.keys(grids).forEach(function(k){
+      var grid = grids[k];
+      var bar = document.createElement('div');
+      bar.className = 'acc-controls';
+      bar.innerHTML = '<button type="button" data-acc="expand">Expand all</button><button type="button" data-acc="collapse">Collapse all</button>';
+      grid.parentNode.insertBefore(bar, grid);
+      bar.addEventListener('click', function(e){
+        var b = e.target.closest('button'); if (!b) return;
+        var collapse = b.dataset.acc === 'collapse';
+        grid.querySelectorAll('.fcard[data-collapsible]').forEach(function(c){
+          c.classList.toggle('collapsed', collapse);
+          var hd = c.querySelector('.fc-head'); if (hd) hd.setAttribute('aria-expanded', collapse ? 'false' : 'true');
+        });
+      });
+    });
+  })();
+
+  // ---------- product comparison focus toggle ----------
+  (function(){
+    var seg = document.getElementById('cmpSeg');
+    var table = document.getElementById('cmpTable');
+    if (!seg || !table) return;
+    function apply(sel){
+      var rows = table.querySelectorAll('tr');
+      rows.forEach(function(r){
+        var cells = r.children; // col 0 = label, 1..3 = products
+        for (var c = 1; c <= 3; c++){
+          if (cells[c]) cells[c].classList.toggle('cmp-dim', sel !== 'all' && String(c) !== sel);
+        }
+      });
+    }
+    seg.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      seg.querySelectorAll('button').forEach(function(x){ x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      apply(b.dataset.cmp);
+    });
+  })();
+
+  // ---------- concentric diagram assemble on view ----------
+  (function(){
+    var dg = document.querySelector('.dg-assemble');
+    if (!dg) return;
+    var o = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if (e.isIntersecting){ dg.classList.add('assembled'); o.unobserve(dg); } });
+    }, { threshold: 0.25 });
+    o.observe(dg);
+  })();
 </script>
 
 </body>
