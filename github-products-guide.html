@@ -163,6 +163,10 @@
   .diagram { background: var(--bg-alt); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-top: 2rem; overflow-x: auto; }
   .diagram svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
   .diagram .dg-cap { text-align: center; font-size: 0.8rem; color: var(--text-dim); margin-top: 0.9rem; }
+  .diagram .dg-title { text-align: center; font-size: 0.92rem; font-weight: 700; letter-spacing: 0.3px; color: var(--text); margin-bottom: 0.15rem; }
+  .diagram .dg-title .em { color: #bc8cff; }
+  .diagram .dg-sub { text-align: center; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 1.1rem; }
+  @media (prefers-reduced-motion: reduce) { .diagram svg animate, .diagram svg animateMotion { animation-play-state: paused; } }
 
   /* ---------- TIMELINE (SDLC) ---------- */
   .timeline { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(190px, 1fr); gap: 0; overflow-x: auto; padding: 1rem 0 1.5rem; scroll-snap-type: x proximity; }
@@ -293,83 +297,143 @@
   <div class="section-head">
     <div class="section-label"><span class="num">01</span> · Executive overview</div>
     <h2 class="section-title">Three products, one platform</h2>
-    <p class="section-sub">Don't think of these as three separate tools you buy. Think of them as three <strong>layers</strong> of the same system. Each layer sits on top of the one below it and makes it more valuable — the platform holds everything, security wraps around it, and AI accelerates the people using it.</p>
+    <p class="section-sub">Don't think of these as three separate tools you buy. Think of them as three <strong>concentric layers</strong> of one system: GitHub Enterprise is the <strong>core</strong> everything is built on, GitHub Copilot is the <strong>accelerator</strong> wrapped around that core to speed the people using it, and GitHub Advanced Security is the <strong>outer protective shell</strong> that guards every layer inside it.</p>
   </div>
 
   <div class="pillars">
     <div class="pillar p-ent">
       <div class="p-ic">🏢</div>
-      <div class="p-role">The foundation</div>
+      <div class="p-role">Core · the foundation</div>
       <h3>GitHub Enterprise</h3>
       <p>Where your code, teams, automation, and governance live. Repositories, organizations, permissions, Actions, Codespaces, Packages, Projects, audit logs and policy — the ground everything else stands on.</p>
       <div class="p-tagline">“The operating system for software development.”</div>
     </div>
+    <div class="pillar p-cop">
+      <div class="p-ic">🤖</div>
+      <div class="p-role">Accelerator · the speed layer</div>
+      <h3>GitHub Copilot Business</h3>
+      <p>AI that works alongside every developer — completing code, answering questions, explaining unfamiliar files, drafting tests and docs, reviewing pull requests, and taking on multi-step tasks as an agent. It flows through <em>every stage</em> of the SDLC.</p>
+      <div class="p-tagline">“An AI pair programmer for every developer.”</div>
+    </div>
     <div class="pillar p-sec">
       <div class="p-ic">🛡️</div>
-      <div class="p-role">The protection layer</div>
+      <div class="p-role">Outer shell · the protection layer</div>
       <h3>GitHub Advanced Security</h3>
       <p>Security woven directly into the same place developers already work. It scans code, catches leaked secrets, watches your dependencies, and gives security teams a single view of risk — without leaving GitHub.</p>
       <div class="p-tagline">“A security team continuously inspecting your code.”</div>
     </div>
-    <div class="pillar p-cop">
-      <div class="p-ic">🤖</div>
-      <div class="p-role">The acceleration layer</div>
-      <h3>GitHub Copilot Business</h3>
-      <p>AI that works alongside every developer — completing code, answering questions, explaining unfamiliar files, drafting tests and docs, reviewing pull requests, and taking on multi-step tasks as an agent.</p>
-      <div class="p-tagline">“An AI pair programmer for every developer.”</div>
-    </div>
   </div>
 
-  <div class="diagram" role="img" aria-label="Layered diagram: GitHub Enterprise is the base platform. Advanced Security wraps around it as a protection layer. Copilot Business accelerates the developers working on top.">
-    <svg viewBox="0 0 860 430" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, Segoe UI, sans-serif">
+  <!-- Diagram A: concentric product layers -->
+  <div class="diagram" role="img" aria-label="Concentric layer diagram: GitHub Enterprise is the core foundation at the center, GitHub Copilot forms the acceleration layer wrapped around the core, and GitHub Advanced Security forms the outer protective shell wrapped around everything.">
+    <div class="dg-title">Three products, structured as <span class="em">concentric layers</span></div>
+    <div class="dg-sub">Enterprise sits at the core · Copilot wraps it to accelerate · Advanced Security forms the outer protective shell</div>
+    <svg viewBox="0 0 860 452" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, Segoe UI, sans-serif">
       <defs>
-        <linearGradient id="gEnt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#388bfd"/><stop offset="1" stop-color="#58a6ff"/></linearGradient>
-        <linearGradient id="gSec" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2ea043"/><stop offset="1" stop-color="#56d364"/></linearGradient>
-        <linearGradient id="gCop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bc8cff"/><stop offset="1" stop-color="#f778ba"/></linearGradient>
+        <linearGradient id="ovEnt" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#388bfd"/><stop offset="1" stop-color="#58a6ff"/></linearGradient>
+        <linearGradient id="ovSec" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2ea043"/><stop offset="1" stop-color="#56d364"/></linearGradient>
+        <linearGradient id="ovCop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bc8cff"/><stop offset="1" stop-color="#f778ba"/></linearGradient>
       </defs>
 
-      <!-- Copilot accelerates (top, people) -->
-      <text x="430" y="34" fill="#bc8cff" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="1">🤖 COPILOT BUSINESS — accelerates the people</text>
-      <g>
-        <circle cx="250" cy="70" r="16" fill="#161b22" stroke="#bc8cff" stroke-width="2"/><text x="250" y="76" font-size="16" text-anchor="middle">👩‍💻</text>
-        <circle cx="360" cy="70" r="16" fill="#161b22" stroke="#bc8cff" stroke-width="2"/><text x="360" y="76" font-size="16" text-anchor="middle">👨‍💻</text>
-        <circle cx="470" cy="70" r="16" fill="#161b22" stroke="#bc8cff" stroke-width="2"/><text x="470" y="76" font-size="16" text-anchor="middle">🧑‍💻</text>
-        <circle cx="580" cy="70" r="16" fill="#161b22" stroke="#bc8cff" stroke-width="2"/><text x="580" y="76" font-size="16" text-anchor="middle">👩‍🔧</text>
+      <!-- Outer shell: Advanced Security -->
+      <rect x="28" y="58" width="804" height="352" rx="30" fill="#3fb950" fill-opacity="0.06" stroke="url(#ovSec)" stroke-width="2.5"/>
+      <rect x="44" y="44" width="344" height="30" rx="8" fill="#0d1117" stroke="#2ea043" stroke-width="1"/>
+      <text x="60" y="63.5" fill="#56d364" font-size="12" font-weight="800" letter-spacing="0.3">🛡️ ADVANCED SECURITY · outer protective shell</text>
+      <g stroke="#56d364" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M44,228 l11,9 l-11,9"/><path d="M816,228 l-11,9 l11,9"/>
       </g>
 
-      <!-- Security wrapper -->
-      <rect x="70" y="110" width="720" height="250" rx="20" fill="none" stroke="url(#gSec)" stroke-width="2" stroke-dasharray="7 6"/>
-      <rect x="70" y="110" width="248" height="30" rx="8" fill="#0d1117"/>
-      <text x="86" y="130" fill="#56d364" font-size="12.5" font-weight="700">🛡️ ADVANCED SECURITY — wraps everything</text>
-
-      <!-- Enterprise foundation -->
-      <rect x="110" y="160" width="640" height="170" rx="16" fill="url(#gEnt)" opacity="0.14" stroke="#58a6ff" stroke-width="1.5"/>
-      <text x="430" y="188" fill="#58a6ff" font-size="13" font-weight="800" text-anchor="middle" letter-spacing="0.5">🏢 GITHUB ENTERPRISE — the foundation</text>
-
-      <!-- foundation building blocks -->
-      <g font-size="11" fill="#e6edf3" text-anchor="middle">
-        <rect x="135" y="205" width="110" height="46" rx="9" fill="#161b22" stroke="#30363d"/><text x="190" y="226">📦 Repositories</text><text x="190" y="240" fill="#8b949e" font-size="9.5">code &amp; history</text>
-        <rect x="258" y="205" width="110" height="46" rx="9" fill="#161b22" stroke="#30363d"/><text x="313" y="226">⚙️ Actions</text><text x="313" y="240" fill="#8b949e" font-size="9.5">CI/CD</text>
-        <rect x="381" y="205" width="110" height="46" rx="9" fill="#161b22" stroke="#30363d"/><text x="436" y="226">👥 Orgs &amp; Teams</text><text x="436" y="240" fill="#8b949e" font-size="9.5">permissions</text>
-        <rect x="504" y="205" width="110" height="46" rx="9" fill="#161b22" stroke="#30363d"/><text x="559" y="226">💻 Codespaces</text><text x="559" y="240" fill="#8b949e" font-size="9.5">dev envs</text>
-        <rect x="627" y="205" width="100" height="46" rx="9" fill="#161b22" stroke="#30363d"/><text x="677" y="226">📊 Projects</text><text x="677" y="240" fill="#8b949e" font-size="9.5">planning</text>
-
-        <rect x="196" y="264" width="120" height="46" rx="9" fill="#161b22" stroke="#30363d"/><text x="256" y="285">🔀 Pull Requests</text><text x="256" y="299" fill="#8b949e" font-size="9.5">review &amp; merge</text>
-        <rect x="329" y="264" width="120" height="46" rx="9" fill="#161b22" stroke="#30363d"/><text x="389" y="285">📋 Audit &amp; Policy</text><text x="389" y="299" fill="#8b949e" font-size="9.5">governance</text>
-        <rect x="462" y="264" width="120" height="46" rx="9" fill="#161b22" stroke="#30363d"/><text x="522" y="285">📦 Packages</text><text x="522" y="299" fill="#8b949e" font-size="9.5">artifacts</text>
+      <!-- Middle ring: Copilot -->
+      <rect x="92" y="120" width="676" height="236" rx="24" fill="#bc8cff" fill-opacity="0.07" stroke="url(#ovCop)" stroke-width="2.5"/>
+      <rect x="108" y="106" width="300" height="30" rx="8" fill="#0d1117" stroke="#8957e5" stroke-width="1"/>
+      <text x="124" y="125.5" fill="#d2a8ff" font-size="12" font-weight="800" letter-spacing="0.3">🤖 GITHUB COPILOT · acceleration layer</text>
+      <g stroke="#d2a8ff" stroke-width="2" fill="none" opacity="0.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M108,229 l10,8 l-10,8"/><path d="M752,229 l-10,8 l10,8"/>
       </g>
 
-      <!-- arrows from copilot to platform -->
-      <g stroke="#bc8cff" stroke-width="1.6" opacity="0.55" marker-end="url(#ah)">
-        <line x1="250" y1="88" x2="250" y2="158"/>
-        <line x1="470" y1="88" x2="430" y2="158"/>
-        <line x1="580" y1="88" x2="600" y2="158"/>
-      </g>
-      <defs><marker id="ah" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#bc8cff"/></marker></defs>
+      <!-- Core: Enterprise -->
+      <rect x="170" y="184" width="520" height="152" rx="16" fill="url(#ovEnt)" opacity="0.15"/>
+      <rect x="170" y="184" width="520" height="152" rx="16" fill="none" stroke="#58a6ff" stroke-width="1.6"/>
+      <text x="430" y="209" fill="#58a6ff" font-size="12.5" font-weight="800" text-anchor="middle" letter-spacing="0.4">🏢 GITHUB ENTERPRISE · the core foundation</text>
 
-      <text x="430" y="392" fill="#8b949e" font-size="12" text-anchor="middle">Developers build on the <tspan fill="#58a6ff">platform</tspan>, Copilot <tspan fill="#bc8cff">accelerates</tspan> them, and Advanced Security <tspan fill="#56d364">protects</tspan> every layer.</text>
+      <!-- core building blocks -->
+      <g font-size="10.5" fill="#e6edf3" text-anchor="middle">
+        <rect x="182" y="222" width="92" height="44" rx="9" fill="#161b22" stroke="#30363d"/><text x="228" y="242">📦 Repos</text><text x="228" y="256" fill="#8b949e" font-size="9">code</text>
+        <rect x="284" y="222" width="92" height="44" rx="9" fill="#161b22" stroke="#30363d"/><text x="330" y="242">⚙️ Actions</text><text x="330" y="256" fill="#8b949e" font-size="9">CI/CD</text>
+        <rect x="386" y="222" width="92" height="44" rx="9" fill="#161b22" stroke="#30363d"/><text x="432" y="242">👥 Orgs</text><text x="432" y="256" fill="#8b949e" font-size="9">teams</text>
+        <rect x="488" y="222" width="92" height="44" rx="9" fill="#161b22" stroke="#30363d"/><text x="534" y="242">💻 Spaces</text><text x="534" y="256" fill="#8b949e" font-size="9">dev envs</text>
+        <rect x="590" y="222" width="92" height="44" rx="9" fill="#161b22" stroke="#30363d"/><text x="636" y="242">📊 Projects</text><text x="636" y="256" fill="#8b949e" font-size="9">planning</text>
+
+        <rect x="236" y="274" width="120" height="44" rx="9" fill="#161b22" stroke="#30363d"/><text x="296" y="294">🔀 Pull Requests</text><text x="296" y="308" fill="#8b949e" font-size="9">review &amp; merge</text>
+        <rect x="370" y="274" width="120" height="44" rx="9" fill="#161b22" stroke="#30363d"/><text x="430" y="294">📋 Audit &amp; Policy</text><text x="430" y="308" fill="#8b949e" font-size="9">governance</text>
+        <rect x="504" y="274" width="120" height="44" rx="9" fill="#161b22" stroke="#30363d"/><text x="564" y="294">📦 Packages</text><text x="564" y="308" fill="#8b949e" font-size="9">artifacts</text>
+      </g>
+
+      <text x="430" y="392" fill="#8b949e" font-size="12" text-anchor="middle">The <tspan fill="#58a6ff">core</tspan> is wrapped by <tspan fill="#d2a8ff">acceleration</tspan>, which is wrapped by <tspan fill="#56d364">protection</tspan> — one system, three layers.</text>
     </svg>
-    <div class="dg-cap">How the three layers stack: the platform holds your work, security surrounds it, and AI speeds up the people on top.</div>
+    <div class="dg-cap">Read it from the inside out: the Enterprise core holds your work, Copilot's layer speeds up the people working on it, and Advanced Security's shell guards every layer within.</div>
+  </div>
+
+  <!-- Diagram B: Copilot flowing through the SDLC -->
+  <div class="diagram" role="img" aria-label="Animated flowline diagram showing GitHub Copilot flowing through the software development lifecycle stages: Plan, Code, Test, Secure, Review, Deploy, and Monitor, in a continuous loop.">
+    <div class="dg-title"><span class="em">🤖 Copilot</span> flows through every stage of the SDLC</div>
+    <div class="dg-sub">The travelling pulse shows Copilot assisting continuously — from planning to monitoring — and looping back around, never leaving the workflow.</div>
+    <svg viewBox="0 0 900 196" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, Segoe UI, sans-serif">
+      <defs>
+        <linearGradient id="ovFlow" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8957e5"/><stop offset="0.5" stop-color="#bc8cff"/><stop offset="1" stop-color="#f778ba"/></linearGradient>
+        <marker id="ovArrow" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path d="M0,0 L6.5,3 L0,6 Z" fill="#f778ba"/></marker>
+        <marker id="ovArrow2" markerWidth="9" markerHeight="9" refX="6.5" refY="3" orient="auto"><path d="M0,0 L6.5,3 L0,6 Z" fill="#8957e5"/></marker>
+        <radialGradient id="ovGlow"><stop offset="0" stop-color="#d2a8ff" stop-opacity="0.55"/><stop offset="1" stop-color="#d2a8ff" stop-opacity="0"/></radialGradient>
+      </defs>
+
+      <!-- continuous-loop return arc -->
+      <path d="M812,60 C700,14 220,14 110,60" fill="none" stroke="#8957e5" stroke-width="1.6" stroke-dasharray="5 5" opacity="0.5" marker-end="url(#ovArrow2)"/>
+      <text x="460" y="24" fill="#8b949e" font-size="10" text-anchor="middle" font-style="italic">continuous loop — Copilot never leaves the workflow</text>
+
+      <!-- flowline track -->
+      <line x1="60" y1="64" x2="856" y2="64" stroke="url(#ovFlow)" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="9 8" marker-end="url(#ovArrow)">
+        <animate attributeName="stroke-dashoffset" values="34;0" dur="0.9s" repeatCount="indefinite"/>
+      </line>
+
+      <!-- stage nodes on the track + connectors down to pills -->
+      <g>
+        <g stroke="#8957e5" stroke-width="1.3" opacity="0.6"><line x1="100" y1="64" x2="100" y2="94"/><line x1="220" y1="64" x2="220" y2="94"/><line x1="340" y1="64" x2="340" y2="94"/><line x1="460" y1="64" x2="460" y2="94"/><line x1="580" y1="64" x2="580" y2="94"/><line x1="700" y1="64" x2="700" y2="94"/><line x1="820" y1="64" x2="820" y2="94"/></g>
+        <g fill="#bc8cff"><circle cx="100" cy="64" r="3.5"/><circle cx="220" cy="64" r="3.5"/><circle cx="340" cy="64" r="3.5"/><circle cx="460" cy="64" r="3.5"/><circle cx="580" cy="64" r="3.5"/><circle cx="700" cy="64" r="3.5"/><circle cx="820" cy="64" r="3.5"/></g>
+      </g>
+
+      <!-- stage pills -->
+      <g text-anchor="middle" font-size="11.5" fill="#e6edf3">
+        <rect x="48"  y="94" width="104" height="40" rx="10" fill="#161b22" stroke="#8957e5" stroke-opacity="0.75"/><text x="100" y="118">🧭 Plan</text>
+        <rect x="168" y="94" width="104" height="40" rx="10" fill="#161b22" stroke="#8957e5" stroke-opacity="0.75"/><text x="220" y="118">⌨️ Code</text>
+        <rect x="288" y="94" width="104" height="40" rx="10" fill="#161b22" stroke="#8957e5" stroke-opacity="0.75"/><text x="340" y="118">🧪 Test</text>
+        <rect x="408" y="94" width="104" height="40" rx="10" fill="#161b22" stroke="#8957e5" stroke-opacity="0.75"/><text x="460" y="118">🛡️ Secure</text>
+        <rect x="528" y="94" width="104" height="40" rx="10" fill="#161b22" stroke="#8957e5" stroke-opacity="0.75"/><text x="580" y="118">🔀 Review</text>
+        <rect x="648" y="94" width="104" height="40" rx="10" fill="#161b22" stroke="#8957e5" stroke-opacity="0.75"/><text x="700" y="118">🚀 Deploy</text>
+        <rect x="768" y="94" width="104" height="40" rx="10" fill="#161b22" stroke="#8957e5" stroke-opacity="0.75"/><text x="820" y="118">📈 Monitor</text>
+      </g>
+
+      <!-- Copilot action sublabels -->
+      <g text-anchor="middle" font-size="9.5" fill="#bc8cff">
+        <text x="100" y="152">drafts the plan</text>
+        <text x="220" y="152">completes code</text>
+        <text x="340" y="152">generates tests</text>
+        <text x="460" y="152">fixes findings</text>
+        <text x="580" y="152">summarizes PRs</text>
+        <text x="700" y="152">guards releases</text>
+        <text x="820" y="152">explains incidents</text>
+      </g>
+
+      <!-- travelling Copilot pulse -->
+      <g>
+        <circle r="13" fill="url(#ovGlow)"/>
+        <circle r="5.5" fill="#d2a8ff" stroke="#f0d8ff" stroke-width="1"/>
+        <animateMotion dur="6.5s" repeatCount="indefinite" rotate="0" keyPoints="0;1" keyTimes="0;1" calcMode="linear" path="M60,64 L856,64"/>
+      </g>
+
+      <!-- legend -->
+      <g><circle cx="66" cy="182" r="5.5" fill="#d2a8ff"/><text x="80" y="186" font-size="10.5" fill="#8b949e"><tspan fill="#bc8cff" font-weight="700">Copilot</tspan> — assisting at each phase, in every direction of the loop</text></g>
+    </svg>
+    <div class="dg-cap">Unlike a tool bolted onto one step, Copilot is present at <strong>every</strong> stage — so its acceleration layer truly wraps the whole lifecycle, not just the coding part.</div>
   </div>
 
   <div class="grid cols-3 mt-lg">
